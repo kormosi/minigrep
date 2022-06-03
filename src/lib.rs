@@ -15,7 +15,17 @@ impl Config {
 
         let query = args[1].clone();
         let filename = args[2].clone();
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let case_sensitive: bool;
+
+        if args.len() == 4 {
+            if args[3] == "-i" {
+                case_sensitive = false;
+            } else {
+                return Err("Unrecognized flag");
+            }
+        } else {
+            case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        }
 
         Ok(Config {
             query,
