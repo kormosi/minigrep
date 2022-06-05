@@ -18,10 +18,9 @@ impl Config {
         let case_sensitive: bool;
 
         if args.len() == 4 {
-            if args[3] == "-i" {
-                case_sensitive = false;
-            } else {
-                return Err("Unrecognized flag");
+            match args[3].as_str() {
+                "-i" => case_sensitive = false,
+                _ => return Err("Unrecognized flag")
             }
         } else {
             case_sensitive = env::var("CASE_INSENSITIVE").is_err();
